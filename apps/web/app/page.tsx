@@ -1,281 +1,310 @@
-import Link from 'next/link'
+"use client";
 
-const features = [
-  {
-    title: 'AI Viral Detection',
-    desc: 'Detect high-energy moments automatically using AI transcript analysis.',
-  },
-  {
-    title: 'Auto Captions',
-    desc: 'Generate clean animated captions optimized for Shorts and Reels.',
-  },
-  {
-    title: 'Faceless Templates',
-    desc: 'Use ready-made templates for Reddit, storytelling, motivation, and gaming.',
-  },
-  {
-    title: '9:16 Export',
-    desc: 'Convert horizontal content into clean vertical short-form videos instantly.',
-  },
-]
+import React from 'react';
+import { motion } from 'framer-motion';
+import { 
+  CheckCircle2, 
+  Play, 
+  Zap, 
+  BarChart3, 
+  Layers, 
+  Share2, 
+  Globe, 
+  ArrowRight,
+  Star
+} from 'lucide-react';
 
-const pricing = [
-  {
-    name: 'Free',
-    price: '₹0',
-    features: ['30 credits/month', '720p exports', 'Watermark', '3 exports/day'],
-  },
-  {
-    name: 'Creator',
-    price: '₹299',
-    features: [
-      '200 credits/month',
-      '1080p exports',
-      'No watermark',
-      'Templates + hooks',
-    ],
-  },
-  {
-    name: 'Pro',
-    price: '₹999',
-    features: [
-      '1000 credits/month',
-      'Priority rendering',
-      'Batch exports',
-      'Premium templates',
-    ],
-  },
-]
+// --- Reusable Glass Card Component ---
+const GlassCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+  <div className={`backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl ${className}`}>
+    {children}
+  </div>
+);
 
-export default function HomePage() {
+export default function LandingPage() {
+  const fadeUp = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.6 }
+  };
+
   return (
-    <main className="min-h-screen overflow-hidden bg-[#050505] text-white">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.25),transparent_40%)]" />
+    <div className="min-h-screen bg-[#09090B] text-white selection:bg-brand-primary/30 overflow-x-hidden">
+      {/* Background Glows */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-brand-primary/20 blur-[120px] rounded-full animate-pulse-slow" />
+        <div className="absolute top-[20%] -right-[5%] w-[30%] h-[30%] bg-brand-accent/10 blur-[100px] rounded-full" />
+      </div>
 
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="text-2xl font-bold tracking-tight">
-            ClipGenius AI
+      {/* --- NAVBAR --- */}
+      <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
+            <div className="w-8 h-8 bg-gradient-to-br from-brand-primary to-brand-accent rounded-lg flex items-center justify-center">
+              <Zap size={18} className="text-white fill-white" />
+            </div>
+            <span>ClipGenius AI</span>
+          </div>
+          
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+            {["Features", "How It Works", "Pricing", "FAQ", "Blog"].map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-white transition-colors">{item}</a>
+            ))}
           </div>
 
-          <nav className="hidden items-center gap-8 text-sm text-white/70 md:flex">
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#faq">FAQ</a>
-          </nav>
-
           <div className="flex items-center gap-4">
-            <Link
-              href="/dashboard"
-              className="rounded-full border border-white/15 px-5 py-2 text-sm transition hover:border-white/40"
-            >
-              Dashboard
-            </Link>
-
-            <button className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition hover:scale-105">
-              Start Free
+            <button className="text-sm font-medium hover:text-brand-accent transition-colors">Sign In</button>
+            <button className="px-5 py-2.5 bg-gradient-to-r from-brand-primary to-brand-accent rounded-full text-sm font-bold shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:scale-105 transition-transform">
+              Start Free Trial
             </button>
           </div>
         </div>
-      </header>
+      </nav>
 
-      <section className="relative">
-        <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 py-24 lg:grid-cols-2 lg:py-32">
-          <div>
-            <div className="inline-flex rounded-full border border-purple-500/30 bg-purple-500/10 px-4 py-2 text-sm text-purple-300 backdrop-blur-xl">
-              AI Shorts Generator For Faceless Creators
+      {/* --- HERO SECTION --- */}
+      <section className="relative pt-40 pb-24 px-6">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div {...fadeUp}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-accent text-xs font-bold mb-6 tracking-wide uppercase">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
+              </span>
+              AI Powered Video Repurposing
             </div>
-
-            <h1 className="mt-8 text-5xl font-black leading-tight md:text-7xl">
-              Turn Long Videos Into Viral Shorts Automatically
+            <h1 className="text-6xl md:text-7xl font-extrabold leading-[1.1] mb-6">
+              Turn Long Videos Into <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary via-brand-accent to-purple-400">Viral Shorts</span> In Minutes
             </h1>
-
-            <p className="mt-8 max-w-xl text-lg leading-8 text-white/60">
-              Upload podcasts, YouTube videos, webinars, and coaching content.
-              ClipGenius AI automatically finds engaging moments, adds captions,
-              and exports vertical short-form content in minutes.
+            <p className="text-xl text-gray-400 mb-8 max-w-lg leading-relaxed">
+              Our AI finds the best moments, adds captions, and creates viral clips that grow your audience automatically.
             </p>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              <button className="rounded-2xl bg-white px-8 py-4 font-semibold text-black transition hover:scale-105">
-                Start Free
-              </button>
-
-              <button className="rounded-2xl border border-white/15 bg-white/5 px-8 py-4 font-semibold backdrop-blur-xl transition hover:border-white/40">
-                Watch Demo
-              </button>
-            </div>
-
-            <div className="mt-12 flex flex-wrap gap-6 text-sm text-white/50">
-              <div>✓ No editing skills required</div>
-              <div>✓ Beginner friendly</div>
-              <div>✓ Optimized for Reels & Shorts</div>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="absolute inset-0 rounded-[40px] bg-purple-500/20 blur-3xl" />
-
-            <div className="relative rounded-[32px] border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur-2xl">
-              <div className="rounded-[28px] border border-white/10 bg-[#0b0b0b] p-6">
-                <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                  <div>
-                    <div className="text-lg font-semibold">
-                      1-Hour Podcast.mp4
-                    </div>
-                    <div className="mt-1 text-sm text-white/50">
-                      AI Processing Complete
-                    </div>
+            
+            <div className="space-y-4 mb-10">
+              {["AI Finds Viral Moments", "Auto Captions & Emojis", "Ready For All Platforms"].map((item) => (
+                <div key={item} className="flex items-center gap-3 text-gray-300">
+                  <div className="p-1 rounded-full bg-brand-primary/20 border border-brand-primary/30">
+                    <CheckCircle2 size={16} className="text-brand-accent" />
                   </div>
-
-                  <div className="rounded-xl bg-green-500/15 px-4 py-2 text-sm text-green-400">
-                    Ready
-                  </div>
+                  <span className="font-medium">{item}</span>
                 </div>
-
-                <div className="mt-6 grid gap-4">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm text-white/50">
-                          Clip Generated
-                        </div>
-                        <div className="mt-2 text-xl font-semibold">
-                          “This mistake kills your growth”
-                        </div>
-                      </div>
-
-                      <div className="rounded-xl bg-purple-500/15 px-3 py-2 text-sm text-purple-300">
-                        00:42
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm text-white/50">
-                          Export Format
-                        </div>
-                        <div className="mt-2 text-xl font-semibold">
-                          1080p Vertical
-                        </div>
-                      </div>
-
-                      <div className="rounded-xl bg-blue-500/15 px-3 py-2 text-sm text-blue-300">
-                        9:16
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-sm text-white/50">
-                          AI Captions
-                        </div>
-                        <div className="mt-2 text-xl font-semibold">
-                          Animated + Emoji Style
-                        </div>
-                      </div>
-
-                      <div className="rounded-xl bg-pink-500/15 px-3 py-2 text-sm text-pink-300">
-                        Enabled
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="features" className="mx-auto max-w-7xl px-6 py-24">
-        <div className="mb-16 text-center">
-          <div className="text-sm uppercase tracking-[0.3em] text-purple-400">
-            Features
-          </div>
-
-          <h2 className="mt-4 text-4xl font-black md:text-5xl">
-            Built For Modern Short-Form Creators
-          </h2>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-[28px] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl transition hover:-translate-y-1 hover:border-purple-500/30"
-            >
-              <div className="mb-6 h-12 w-12 rounded-2xl bg-purple-500/15" />
-
-              <h3 className="text-2xl font-bold">{feature.title}</h3>
-
-              <p className="mt-4 leading-7 text-white/60">{feature.desc}</p>
+            <div className="flex flex-wrap gap-4 mb-12">
+              <button className="px-8 py-4 bg-brand-primary hover:bg-brand-secondary rounded-xl font-bold flex items-center gap-2 transition-all group shadow-xl shadow-brand-primary/20">
+                Start Free Trial <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-bold transition-all">
+                See Demo
+              </button>
             </div>
-          ))}
-        </div>
-      </section>
 
-      <section id="pricing" className="mx-auto max-w-7xl px-6 py-24">
-        <div className="mb-16 text-center">
-          <div className="text-sm uppercase tracking-[0.3em] text-purple-400">
-            Pricing
-          </div>
-
-          <h2 className="mt-4 text-4xl font-black md:text-5xl">
-            Simple Pricing For Creators
-          </h2>
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-3">
-          {pricing.map((plan, index) => (
-            <div
-              key={plan.name}
-              className={`rounded-[32px] border p-8 backdrop-blur-xl ${
-                index === 1
-                  ? 'border-purple-500/40 bg-purple-500/10'
-                  : 'border-white/10 bg-white/[0.03]'
-              }`}
-            >
-              <div className="text-xl font-bold">{plan.name}</div>
-
-              <div className="mt-6 text-6xl font-black">
-                {plan.price}
-                <span className="text-lg text-white/40">/mo</span>
-              </div>
-
-              <div className="mt-8 space-y-4 text-white/70">
-                {plan.features.map((item) => (
-                  <div key={item}>✓ {item}</div>
+            <div className="flex items-center gap-4">
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-[#09090B] bg-gray-800 overflow-hidden">
+                    <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" />
+                  </div>
                 ))}
               </div>
+              <div className="text-sm">
+                <div className="flex items-center gap-1 text-yellow-500 mb-0.5">
+                  {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+                  <span className="text-white font-bold ml-1">4.9/5</span>
+                </div>
+                <p className="text-gray-500">Trusted by 10,000+ creators</p>
+              </div>
+            </div>
+          </motion.div>
 
-              <button className="mt-10 w-full rounded-2xl bg-white px-6 py-4 font-semibold text-black transition hover:scale-[1.02]">
-                Get Started
-              </button>
+          {/* Right Side: Dashboard Preview */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
+            whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 1 }}
+            className="relative"
+          >
+            <div className="absolute inset-0 bg-brand-primary/30 blur-[80px] -z-10 rounded-full scale-75" />
+            <GlassCard className="p-4 overflow-hidden aspect-[4/3] group">
+               {/* Simplified Dashboard UI Mockup */}
+               <div className="flex h-full gap-4">
+                 <div className="w-16 bg-white/5 rounded-lg h-full flex flex-col items-center py-4 gap-6">
+                    <div className="w-8 h-8 rounded bg-brand-primary/20" />
+                    <div className="w-8 h-8 rounded bg-white/5" />
+                    <div className="w-8 h-8 rounded bg-white/5" />
+                 </div>
+                 <div className="flex-1 flex flex-col gap-4">
+                    <div className="h-8 bg-white/5 rounded-lg w-1/3" />
+                    <div className="flex-1 grid grid-cols-3 gap-3">
+                       {[1,2,3].map(i => (
+                         <div key={i} className="bg-white/5 rounded-xl border border-white/10 relative overflow-hidden group-hover:border-brand-primary/50 transition-colors">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                            <div className="absolute bottom-2 left-2 right-2 h-1 bg-white/20 rounded-full overflow-hidden">
+                               <motion.div 
+                                 animate={{ width: ["0%", "100%"] }} 
+                                 transition={{ duration: 3, repeat: Infinity }}
+                                 className="h-full bg-brand-primary" 
+                               />
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                    <div className="h-12 bg-brand-primary rounded-xl flex items-center justify-center font-bold text-sm">
+                       Export Viral Clips
+                    </div>
+                 </div>
+               </div>
+            </GlassCard>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* --- STATS SECTION --- */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <GlassCard className="py-12 px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center bg-gradient-to-b from-white/10 to-transparent">
+            {[
+              { label: "Happy Users", value: "10K+" },
+              { label: "Clips Generated", value: "1M+" },
+              { label: "Views Generated", value: "50M+" },
+              { label: "User Rating", value: "4.9/5" },
+            ].map((stat, i) => (
+              <div key={i}>
+                <div className="text-4xl font-black mb-2 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
+                  {stat.value}
+                </div>
+                <div className="text-gray-500 text-sm font-medium uppercase tracking-wider">{stat.label}</div>
+              </div>
+            ))}
+          </GlassCard>
+        </div>
+      </section>
+
+      {/* --- FEATURES SECTION --- */}
+      <section id="features" className="py-24 px-6 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Everything You Need to Go Viral</h2>
+            <p className="text-gray-400 text-lg">Powerful AI features that help you create and grow faster</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "AI Viral Clip Finder", desc: "Our algorithm detects high-retention moments automatically.", icon: <Zap /> },
+              { title: "Auto Captions", desc: "Trendy, animated captions with emoji support in 20+ languages.", icon: <Layers /> },
+              { title: "Vertical Format", desc: "Perfectly cropped 9:16 videos ready for mobile consumption.", icon: <BarChart3 /> },
+              { title: "Multi Platform", desc: "Schedule and post to TikTok, Reels, and Shorts in one click.", icon: <Share2 /> },
+              { title: "Premium Templates", desc: "Styles used by top creators like Alex Hormozi and MrBeast.", icon: <Play /> },
+              { title: "One Click Export", desc: "High-quality 4K exports without any watermarks.", icon: <Globe /> },
+            ].map((feature, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ y: -8 }}
+                className="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-brand-primary/50 transition-all cursor-default"
+              >
+                <div className="w-12 h-12 rounded-xl bg-brand-primary/20 flex items-center justify-center text-brand-accent mb-6 group-hover:scale-110 transition-transform">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- PRICING SECTION --- */}
+      <section id="pricing" className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+           <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-gray-400">Choose the plan that's right for your growth</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Free */}
+            <GlassCard className="p-8 flex flex-col">
+              <h3 className="text-xl font-bold mb-2">Free</h3>
+              <div className="text-4xl font-black mb-6">₹0<span className="text-lg text-gray-500 font-normal">/mo</span></div>
+              <ul className="space-y-4 mb-8 flex-1">
+                <li className="flex gap-2 text-gray-400 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> 5 AI Minutes / mo</li>
+                <li className="flex gap-2 text-gray-400 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> Standard Export</li>
+              </ul>
+              <button className="w-full py-3 rounded-xl bg-white/10 font-bold hover:bg-white/20 transition-all">Get Started</button>
+            </GlassCard>
+
+            {/* Pro - Highlighted */}
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-brand-primary to-brand-accent rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+              <GlassCard className="p-8 flex flex-col relative bg-brand-dark border-brand-primary/40">
+                <div className="absolute top-4 right-4 bg-brand-primary text-[10px] font-black px-2 py-1 rounded uppercase">Most Popular</div>
+                <h3 className="text-xl font-bold mb-2">Pro</h3>
+                <div className="text-4xl font-black mb-6">₹499<span className="text-lg text-gray-500 font-normal">/mo</span></div>
+                <ul className="space-y-4 mb-8 flex-1">
+                  <li className="flex gap-2 text-gray-200 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> 200 AI Minutes / mo</li>
+                  <li className="flex gap-2 text-gray-200 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> 4K No Watermark</li>
+                  <li className="flex gap-2 text-gray-200 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> Priority Rendering</li>
+                </ul>
+                <button className="w-full py-3 rounded-xl bg-brand-primary font-bold shadow-lg shadow-brand-primary/30 hover:scale-[1.02] transition-all">Start Free Trial</button>
+              </GlassCard>
+            </div>
+
+            {/* Business */}
+            <GlassCard className="p-8 flex flex-col">
+              <h3 className="text-xl font-bold mb-2">Business</h3>
+              <div className="text-4xl font-black mb-6">₹999<span className="text-lg text-gray-500 font-normal">/mo</span></div>
+              <ul className="space-y-4 mb-8 flex-1">
+                <li className="flex gap-2 text-gray-400 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> Unlimited AI Minutes</li>
+                <li className="flex gap-2 text-gray-400 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> API Access</li>
+                <li className="flex gap-2 text-gray-400 text-sm"><CheckCircle2 size={18} className="text-brand-accent"/> Dedicated Support</li>
+              </ul>
+              <button className="w-full py-3 rounded-xl bg-white/10 font-bold hover:bg-white/20 transition-all">Contact Sales</button>
+            </GlassCard>
+          </div>
+        </div>
+      </section>
+
+      {/* --- FINAL CTA --- */}
+      <section className="py-24 px-6">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          className="max-w-5xl mx-auto rounded-[3rem] bg-gradient-to-br from-brand-primary/40 to-brand-accent/10 border border-white/10 p-12 md:p-20 text-center relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+          <h2 className="text-4xl md:text-6xl font-black mb-8 relative z-10">Ready to Create <br/>Viral Content?</h2>
+          <button className="px-10 py-5 bg-white text-black rounded-full font-black text-lg hover:scale-110 transition-transform relative z-10 shadow-2xl">
+            Start Free Trial — No Credit Card
+          </button>
+        </motion.div>
+      </section>
+
+      {/* --- FOOTER --- */}
+      <footer className="border-t border-white/5 py-20 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div>
+            <div className="flex items-center gap-2 font-bold text-lg mb-6">
+              <Zap size={20} className="text-brand-primary" />
+              <span>ClipGenius AI</span>
+            </div>
+            <p className="text-gray-500 text-sm">Empowering creators with artificial intelligence.</p>
+          </div>
+          {["Product", "Company", "Resources", "Legal"].map((cat) => (
+            <div key={cat}>
+              <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-gray-400">{cat}</h4>
+              <ul className="space-y-4 text-gray-500 text-sm">
+                <li><a href="#" className="hover:text-brand-accent transition-colors">Link Item</a></li>
+                <li><a href="#" className="hover:text-brand-accent transition-colors">Link Item</a></li>
+                <li><a href="#" className="hover:text-brand-accent transition-colors">Link Item</a></li>
+              </ul>
             </div>
           ))}
         </div>
-      </section>
-
-      <section className="mx-auto max-w-5xl px-6 py-28 text-center">
-        <div className="rounded-[40px] border border-white/10 bg-white/[0.03] p-14 backdrop-blur-2xl">
-          <h2 className="text-4xl font-black md:text-6xl">
-            Turn One Video Into Weeks Of Content
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/60">
-            Repurpose podcasts, webinars, YouTube videos, and coaching content
-            into vertical Shorts automatically.
-          </p>
-
-          <button className="mt-10 rounded-2xl bg-white px-10 py-5 text-lg font-bold text-black transition hover:scale-105">
-            Start Creating
-          </button>
+        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-gray-600 text-xs">
+          © 2024 ClipGenius AI. All rights reserved. Built for the next generation of creators.
         </div>
-      </section>
-    </main>
-  )
+      </footer>
+    </div>
+  );
       }
